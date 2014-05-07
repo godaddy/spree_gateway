@@ -41,9 +41,8 @@ module Spree
       provider.authorize(money, payment_method, options)
     end
 
-    def capture(authorization, ignored_creditcard, ignored_options)
-      amount = (authorization.amount * 100).to_i
-      provider.capture(amount, authorization.response_code)
+    def capture(amount, authorization_code, ignored_options = {})
+      provider.capture(amount, authorization_code)
     end
 
     def create_profile(payment)
@@ -113,9 +112,21 @@ module Spree
       # We need to add merchant_account_id only if present when creating BraintreeBlueGateway
       # Remove it since it is always part of the preferences hash.
       if h[:merchant_account_id].blank?
-        h.delete(:merchant_account_id) 
-      end 
+        h.delete(:merchant_account_id)
+      end
       h
+    end
+
+    def cancel(response_code)
+      transaction = ::Braintree::Transaction.find(response_code)
+      # From: https://www.braintreepayments.com/docs/ruby/transactions/refund
+      # "A transaction can be refunded if its status is settled or settling.
+      # If the transaction has not yet begun settlement, it should be voided instead of refunded.
+      if transaction.status == Braintree::Transaction::Status::SubmittedForSettlement
+        provider.void(response_code)
+      else
+        provider.refund(response_code)
+      end
     end
 
     def preferences

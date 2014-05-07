@@ -6,7 +6,7 @@ describe Spree::Gateway::StripeGateway do
 
   let(:payment) {
     double('Spree::Payment',
-      source: double('Source', gateway_customer_profile_id: nil).as_null_object,
+      source: Spree::CreditCard.new,
       order: double('Spree::Order',
         email: email,
         bill_address: bill_address
@@ -22,13 +22,17 @@ describe Spree::Gateway::StripeGateway do
     end
   end
 
-  before do 
-    subject.set_preference :secret_key, secret_key
+  before do
+    subject.set_preference :secret_key, secret_key 
     subject.stub(:options_for_purchase_or_auth).and_return(['money','cc','opts'])
     subject.stub(:provider).and_return provider
   end
 
   describe '#create_profile' do
+    before do
+      payment.source.stub(:update_attributes!)
+    end
+
     context 'with an order that has a bill address' do
       let(:bill_address) {
         double('Spree::Address',
@@ -71,52 +75,111 @@ describe Spree::Gateway::StripeGateway do
 
         subject.create_profile payment
       end
+
+      # Regression test for #141
+      context "correcting the card type" do
+        before do
+          # We don't care about this method for these tests
+          subject.provider.stub(:store).and_return(double.as_null_object)
+        end
+
+        it "converts 'American Express' to 'american_express'" do
+          payment.source.cc_type = 'American Express'
+          subject.create_profile(payment)
+          expect(payment.source.cc_type).to eq('american_express')
+        end
+
+        it "converts 'Diners Club' to 'diners_club'" do
+          payment.source.cc_type = 'Diners Club'
+          subject.create_profile(payment)
+          expect(payment.source.cc_type).to eq('diners_club')
+        end
+
+        it "converts 'Visa' to 'visa'" do
+          payment.source.cc_type = 'Visa'
+          subject.create_profile(payment)
+          expect(payment.source.cc_type).to eq('visa')
+        end
+      end
     end
   end
 
   context 'purchasing' do
-
-    after(:each) do
+    after do
       subject.purchase(19.99, 'credit card', {})
     end
 
-    it 'should send the payment to the provider' do
+    it 'send the payment to the provider' do
       provider.should_receive(:purchase).with('money','cc','opts')
     end
-
   end
 
   context 'authorizing' do
-
-    after(:each) do
+    after do
       subject.authorize(19.99, 'credit card', {})
     end
 
-    it 'should send the authorization to the provider' do
+    it 'send the authorization to the provider' do
       provider.should_receive(:authorize).with('money','cc','opts')
     end
-
   end
 
   context 'capturing' do
 
-    let(:payment) do
-      double('payment').tap do |p|
-        p.stub(:amount).and_return(12.34)
-        p.stub(:response_code).and_return('response_code')
-      end
-    end 
-
-    after(:each) do
-      subject.capture(payment, 'credit card', {})
+    after do
+      subject.capture(1234, 'response_code', {})
     end
 
-    it 'should convert the amount to cents' do
+    it 'convert the amount to cents' do
       provider.should_receive(:capture).with(1234,anything,anything)
     end
 
-    it 'should use the response code as the authorization' do
+    it 'use the response code as the authorization' do
       provider.should_receive(:capture).with(anything,'response_code',anything)
+    end
+  end
+
+  context 'capture with payment class' do
+    let(:gateway) do
+      gateway = described_class.new(:environment => 'test', :active => true)
+      gateway.set_preference :secret_key, secret_key
+      gateway.stub(:options_for_purchase_or_auth).and_return(['money','cc','opts'])
+      gateway.stub(:provider).and_return provider
+      gateway.stub :source_required => true
+      gateway
+    end
+
+    let(:order) { Spree::Order.create }
+
+    let(:card) do
+      mock_model(Spree::CreditCard, :number => "4111111111111111",
+                                    :has_payment_profile? => true)
+    end
+
+    let(:payment) do
+      payment = Spree::Payment.new
+      payment.source = card
+      payment.order = order
+      payment.payment_method = gateway
+      payment.amount = 98.55
+      payment.state = 'pending'
+      payment.response_code = '12345'
+      payment
+    end
+
+    let!(:success_response) do
+      double('success_response', :success? => true,
+                               :authorization => '123',
+                               :avs_result => { 'code' => 'avs-code' },
+                               :cvv_result => { 'code' => 'cvv-code', 'message' => "CVV Result"})
+    end
+
+    after do
+      payment.capture!
+    end
+
+    it 'gets correct amount' do
+      provider.should_receive(:capture).with(9855,'12345',anything).and_return(success_response)
     end
   end
 end

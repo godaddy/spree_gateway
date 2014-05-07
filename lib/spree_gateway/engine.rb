@@ -4,11 +4,6 @@ module SpreeGateway
 
     config.autoload_paths += %W(#{config.root}/lib)
 
-    # use rspec for tests
-    config.generators do |g|
-      g.test_framework :rspec
-    end
-
     initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
         app.config.spree.payment_methods << Spree::Gateway::AuthorizeNetCim
         app.config.spree.payment_methods << Spree::Gateway::AuthorizeNet
@@ -35,7 +30,8 @@ module SpreeGateway
         app.config.spree.payment_methods << Spree::Gateway::Paymill
         app.config.spree.payment_methods << Spree::Gateway::PayflowPro
         app.config.spree.payment_methods << Spree::Gateway::SecurePayAU
+        app.config.spree.payment_methods << Spree::Gateway::Maxipago
+        app.config.spree.payment_methods << Spree::Gateway::Migs
     end
   end
-
 end
