@@ -1,2 +1,2 @@
 //= require spree
-//= require store/checkout
+//= require spree/frontend/checkout
