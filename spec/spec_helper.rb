@@ -14,6 +14,11 @@ require 'ffaker'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, timeout: 60.seconds)
+end
+Capybara.javascript_driver = :poltergeist
+
 require 'spree/testing_support/factories'
 require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/preferences'
