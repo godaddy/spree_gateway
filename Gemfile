@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'spree', github: 'spree/spree', branch: '2-2-stable', path: '../spree' # TODO UPGRADE: REMOVE PATH
+gem 'spree', :github => 'godaddy/spree', :branch => '2-2-nemo-stable'
 
 gemspec
 
