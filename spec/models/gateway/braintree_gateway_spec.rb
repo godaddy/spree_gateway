@@ -28,19 +28,103 @@ describe Spree::Gateway::BraintreeGateway do
 
       order = create(:order_with_totals, bill_address: address, ship_address: address)
       order.update!
+      
+      # Use a valid CC from braintree sandbox: https://www.braintreepayments.com/docs/ruby/reference/sandbox
+
+      @credit_card = create(:credit_card,
+        verification_value: '123',
+        number:             '5555555555554444', 
+        month:              9,
+        year:               Time.now.year + 1,
+        name:               'John Doe',
+        cc_type:            'mastercard')
+
+      @payment = create(:payment, source: @credit_card, order: order, payment_method: @gateway, amount: 10.00)
+      @payment.payment_method.environment = 'test'
+    end
+  end
+
+  describe 'payment profile creation' do
+    before do
+      country = create(:country, name: 'United States', iso_name: 'UNITED STATES', iso3: 'USA', iso: 'US', numcode: 840)
+      state   = create(:state, name: 'Maryland', abbr: 'MD', country: country)
+      address = create(:address,
+        firstname: 'John',
+        lastname:  'Doe',
+        address1:  '1234 My Street',
+        address2:  'Apt 1',
+        city:      'Washington DC',
+        zipcode:   '20123',
+        phone:     '(555)555-5555',
+        state:     state,
+        country:   country
+      )
+      @address = address
+
+      order = create(:order_with_totals, bill_address: address, ship_address: address)
+      order.update!
+
+      @credit_card = create(:credit_card,
+        verification_value: '123',
+        number:             '5555555555554444',
+        month:              9,
+        year:               Time.now.year + 1,
+        name:               'John Doe',
+        cc_type:            'mastercard')
+
+      @payment = create(:payment, source: @credit_card, order: order, payment_method: @gateway, amount: 10.00)
+      @payment.payment_method.environment = 'test'
+    end
+
+    context 'when a credit card is created' do
+      it 'it has the address associated on the remote payment profile' do
+        remote_customer = @gateway.provider.instance_variable_get(:@braintree_gateway).customer.find(@credit_card.gateway_customer_profile_id)
+        remote_address = remote_customer.addresses.first rescue nil
+        expect(remote_address).not_to be_nil
+        expect(remote_address.street_address).to eq(@address.address1)
+        expect(remote_address.extended_address).to eq(@address.address2)
+        expect(remote_address.locality).to eq(@address.city)
+        expect(remote_address.region).to eq(@address.state.name)
+        expect(remote_address.country_code_alpha2).to eq(@address.country.iso)
+        expect(remote_address.postal_code).to eq(@address.zipcode)
+      end
+    end
+
+  end
+
+  describe 'payment profile failure' do
+    before do
+      country = create(:country, name: 'United States', iso_name: 'UNITED STATES', iso3: 'USA', iso: 'US', numcode: 840)
+      state   = create(:state, name: 'Maryland', abbr: 'MD', country: country)
+      address = create(:address,
+        firstname: 'John',
+        lastname:  'Doe',
+        address1:  '1234 My Street',
+        address2:  'Apt 1',
+        city:      'Washington DC',
+        zipcode:   '20123',
+        phone:     '(555)555-5555',
+        state:     state,
+        country:   country
+      )
+      @address = address
+
+      order = create(:order_with_totals, bill_address: address, ship_address: address)
+      order.update!
 
       @credit_card = create(:credit_card,
         verification_value: '123',
         number:             '5105105105105100',
         month:              9,
         year:               Time.now.year + 1,
-        first_name:         'John',
-        last_name:          'Doe',
+        name:               'John Doe',
         cc_type:            'mastercard')
-
-      @payment = create(:payment, source: @credit_card, order: order, payment_method: @gateway, amount: 10.00)
-      @payment.payment_method.environment = 'test'
     end
+
+    it 'should fail creation' do
+      expect{ create(:payment, source: @credit_card, order: order, payment_method: @gateway, amount: 10.00) }.to raise_error
+    end
+
   end
 
   describe 'merchant_account_id' do
@@ -123,7 +207,7 @@ describe Spree::Gateway::BraintreeGateway do
 
     context 'when the card is a mastercard' do
       before do
-        @credit_card.number = '5105105105105100'
+        @credit_card.number = '5555555555554444'
         @credit_card.cc_type = 'mastercard'
         @credit_card.save
       end
@@ -261,7 +345,7 @@ describe Spree::Gateway::BraintreeGateway do
 
   context 'update_card_number' do
     it 'passes through gateway_payment_profile_id' do
-      credit_card = { 'token' => 'testing', 'last_4' => '1234', 'masked_number' => '5555**5555' }
+      credit_card = { 'token' => 'testing', 'last_4' => '1234', 'masked_number' => '555555******4444' }
       @gateway.update_card_number(@payment.source, credit_card)
       expect(@payment.source.gateway_payment_profile_id).to eq 'testing'
     end
@@ -279,7 +363,7 @@ describe Spree::Gateway::BraintreeGateway do
     transaction = ::Braintree::Transaction.find(@payment.response_code)
     expect(transaction.type).to eq Braintree::Transaction::Type::Credit
     expect(transaction.status).to eq Braintree::Transaction::Status::SubmittedForSettlement
-    expect(transaction.credit_card_details.masked_number).to eq '510510******5100'
+    expect(transaction.credit_card_details.masked_number).to eq '555555******4444'
     expect(transaction.credit_card_details.expiration_date).to eq "09/#{Time.now.year + 1}"
     expect(transaction.customer_details.first_name).to eq 'John'
     expect(transaction.customer_details.last_name).to eq 'Doe'
@@ -296,7 +380,7 @@ describe Spree::Gateway::BraintreeGateway do
 
     transaction = ::Braintree::Transaction.find(@payment.response_code)
     expect(Braintree::Transaction::Status::SubmittedForSettlement).to eq transaction.status
-    expect(transaction.credit_card_details.masked_number).to eq '510510******5100'
+    expect(transaction.credit_card_details.masked_number).to eq '555555******4444'
     expect(transaction.credit_card_details.expiration_date).to eq "09/#{Time.now.year + 1}"
     expect(transaction.customer_details.first_name).to eq 'John'
     expect(transaction.customer_details.last_name).to eq 'Doe'
