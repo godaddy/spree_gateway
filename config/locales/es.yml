@@ -1,0 +1,30 @@
+---
+es:
+  spree:
+    payment_has_been_cancelled: "El pago se canceló."
+    complete_skrill_checkout: "Completa el pago con Skrill antes de continuar"
+    skrill: "Skrill"
+    skrill_transaction: "Transacción"
+    skrill_customer_id: "Id. de cliente "
+    skrill_transaction_id: "ID de Transacción"
+    skrill_payment_type: "Tipo de pago"
+    skrill_payment_currency: "Moneda de pago"
+    log_entry:
+      braintree:
+        message: "Mensaje"
+        status: "Estado"
+        cc_token: "Token de tarjeta de crédito Braintree"
+        customer_id: "Id. de cliente de Braintree"
+        cvv_result: "Resultado del código de seguridad de la tarjeta"
+        avs_result_title: "Resultado del servicio de verificación de dirección"
+        avs_result:
+          message: "Mensaje"
+          street_match: "Coincidencia de calle"
+          postal_match: "Coincidencia postal"
+      stripe:
+        message: "Mensaje"
+        charge_id: "Id. de cargo de Stripe"
+        card_id: "Id. de tarjeta de Stripe"
+        cvv_result: "Resultado del código de seguridad de la tarjeta"
+        cvc_check: "Verificación de CVC"
+        address_zip_check: "Verificación de código postal"
