@@ -1,0 +1,30 @@
+---
+gf:
+  spree:
+    payment_has_been_cancelled: "⌠515209⌡Thé påymént hås béén cåncélléd.⌠515209⌡"
+    complete_skrill_checkout: "⌠515210⌡Pléåsé còmplété Skrîll chéckòüt béfòré còntînüîng⌠515210⌡"
+    skrill: "⌠515211⌡Skrîll⌠515211⌡"
+    skrill_transaction: "⌠515212⌡Trånsåctîòn⌠515212⌡"
+    skrill_customer_id: "⌠515213⌡Cüstòmér ÎD⌠515213⌡"
+    skrill_transaction_id: "⌠515214⌡Trånsåctîòn ÎD⌠515214⌡"
+    skrill_payment_type: "⌠515215⌡Påymént Typé⌠515215⌡"
+    skrill_payment_currency: "⌠515216⌡Påymént Cürréncy⌠515216⌡"
+    log_entry:
+      braintree:
+        message: "⌠515217⌡Méssågé⌠515217⌡"
+        status: "⌠515218⌡Ståtüs⌠515218⌡"
+        cc_token: "⌠515219⌡Bråîntréé Crédît Cård Tòkén⌠515219⌡"
+        customer_id: "⌠515220⌡Bråîntréé Cüstòmér ÎD⌠515220⌡"
+        cvv_result: "⌠515221⌡CVV Résült⌠515221⌡"
+        avs_result_title: "⌠515222⌡ÅVS résült⌠515222⌡"
+        avs_result:
+          message: "⌠515223⌡Méssågé⌠515223⌡"
+          street_match: "⌠515224⌡Stréét Måtch⌠515224⌡"
+          postal_match: "⌠515225⌡Pòstål Måtch⌠515225⌡"
+      stripe:
+        message: "⌠515226⌡Méssågé⌠515226⌡"
+        charge_id: "⌠515227⌡Strîpé Chårgé ÎD⌠515227⌡"
+        card_id: "⌠515228⌡Strîpé Cård ÎD⌠515228⌡"
+        cvv_result: "⌠515229⌡CVV Résült⌠515229⌡"
+        cvc_check: "⌠515230⌡CVC Chéck⌠515230⌡"
+        address_zip_check: "⌠515231⌡Åddréss ZÎP chéck⌠515231⌡"

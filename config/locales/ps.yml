@@ -1,0 +1,30 @@
+---
+ps:
+  spree:
+    payment_has_been_cancelled: "[Thé påymént hås béén cåncélléd. !!! !!! !!!]"
+    complete_skrill_checkout: "[Pléåsé còmplété Skrîll chéckòüt béfòré còntînüîng !!! !!! !!! !!!]"
+    skrill: "[Skrîll !!! !!! !!! !!! !!! !!!]"
+    skrill_transaction: "[Trånsåctîòn !!!]"
+    skrill_customer_id: "[Cüstòmér ÎD !!!]"
+    skrill_transaction_id: "[Trånsåctîòn ÎD !!!]"
+    skrill_payment_type: "[Påymént Typé !!!]"
+    skrill_payment_currency: "[Påymént Cürréncy !!! !!!]"
+    log_entry:
+      braintree:
+        message: "[Méssågé !!! !!! !!! !!! !!! !!! !!!]"
+        status: "[Ståtüs !!! !!! !!! !!! !!! !!!]"
+        cc_token: "[Bråîntréé Crédît Cård Tòkén !!! !!! !!!]"
+        customer_id: "[Bråîntréé Cüstòmér ÎD !!! !!!]"
+        cvv_result: "[CVV Résült !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!]"
+        avs_result_title: "[ÅVS résült !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!]"
+        avs_result:
+          message: "[Méssågé !!! !!! !!! !!! !!! !!! !!!]"
+          street_match: "[Stréét Måtch !!!]"
+          postal_match: "[Pòstål Måtch !!!]"
+      stripe:
+        message: "[Méssågé !!! !!! !!! !!! !!! !!! !!!]"
+        charge_id: "[Strîpé Chårgé ÎD !!! !!!]"
+        card_id: "[Strîpé Cård ÎD !!!]"
+        cvv_result: "[CVV Résült !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!]"
+        cvc_check: "[CVC Chéck !!! !!! !!! !!! !!! !!! !!! !!! !!!]"
+        address_zip_check: "[Åddréss ZÎP chéck !!! !!!]"

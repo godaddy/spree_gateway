@@ -1,0 +1,30 @@
+---
+pz:
+  spree:
+    payment_has_been_cancelled: "Zzz zzzzzzz zzz zzzz zzzzzzzzz."
+    complete_skrill_checkout: "Zzzzzz zzzzzzzz Zzzzzz zzzzzzzz zzzzzz zzzzzzzzzz"
+    skrill: "Zzzzzz"
+    skrill_transaction: "Zzzzzzzzzzz"
+    skrill_customer_id: "Zzzzzzzz ZZ"
+    skrill_transaction_id: "Zzzzzzzzzzz ZZ"
+    skrill_payment_type: "Zzzzzzz Zzzz"
+    skrill_payment_currency: "Zzzzzzz Zzzzzzzz"
+    log_entry:
+      braintree:
+        message: "Zzzzzzz"
+        status: "Zzzzzz"
+        cc_token: "Zzzzzzzzz Zzzzzz Zzzz Zzzzz"
+        customer_id: "Zzzzzzzzz Zzzzzzzz ZZ"
+        cvv_result: "ZZZ Zzzzzz"
+        avs_result_title: "ZZZ zzzzzz"
+        avs_result:
+          message: "Zzzzzzz"
+          street_match: "Zzzzzz Zzzzz"
+          postal_match: "Zzzzzz Zzzzz"
+      stripe:
+        message: "Zzzzzzz"
+        charge_id: "Zzzzzz Zzzzzz ZZ"
+        card_id: "Zzzzzz Zzzz ZZ"
+        cvv_result: "ZZZ Zzzzzz"
+        cvc_check: "ZZZ Zzzzz"
+        address_zip_check: "Zzzzzzz ZZZ zzzzz"
