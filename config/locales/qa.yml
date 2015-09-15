@@ -1,0 +1,30 @@
+---
+qa:
+  spree:
+    payment_has_been_cancelled: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:payment_has_been_cancelled]"
+    complete_skrill_checkout: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:complete_skrill_checkout]"
+    skrill: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:skrill]"
+    skrill_transaction: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:skrill_transaction]"
+    skrill_customer_id: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:skrill_customer_id]"
+    skrill_transaction_id: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:skrill_transaction_id]"
+    skrill_payment_type: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:skrill_payment_type]"
+    skrill_payment_currency: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:skrill_payment_currency]"
+    log_entry:
+      braintree:
+        message: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:braintree:message]"
+        status: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:braintree:status]"
+        cc_token: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:braintree:cc_token]"
+        customer_id: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:braintree:customer_id]"
+        cvv_result: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:braintree:cvv_result]"
+        avs_result_title: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:braintree:avs_result_title]"
+        avs_result:
+          message: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:braintree:avs_result:message]"
+          street_match: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:braintree:avs_result:street_match]"
+          postal_match: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:braintree:avs_result:postal_match]"
+      stripe:
+        message: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:stripe:message]"
+        charge_id: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:stripe:charge_id]"
+        card_id: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:stripe:card_id]"
+        cvv_result: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:stripe:cvv_result]"
+        cvc_check: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:stripe:cvc_check]"
+        address_zip_check: "[spree_gateway/2-2-nemo-stable/config/locales/en.yml:qa:spree:log_entry:stripe:address_zip_check]"
