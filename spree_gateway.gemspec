@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_gateway'
-  s.version     = '2.2.1'
+  s.version     = '3.0.0'
   s.summary     = 'Additional Payment Gateways for Spree Commerce'
   s.description = s.summary
   s.required_ruby_version = '>= 1.9.3'
@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree_core', '~> 2.2.0'
+  s.add_dependency 'spree_core', '~> 3.0.0'
 
   s.add_development_dependency 'factory_girl', '~> 4.4'
   s.add_development_dependency 'rspec-rails', '~> 2.14'
