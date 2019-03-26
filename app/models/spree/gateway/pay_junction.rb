@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Gateway::PayJunction < Gateway
     preference :login, :string

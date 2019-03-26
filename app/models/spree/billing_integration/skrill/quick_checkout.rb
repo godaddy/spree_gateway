@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class BillingIntegration::Skrill::QuickCheckout < BillingIntegration
     preference :merchant_id, :string

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Gateway::StripeGateway < Gateway
     preference :secret_key, :string
@@ -52,7 +54,7 @@ module Spree
 
       response = provider.store(source, options)
       if response.success?
-        payment.source.update_attributes!({ 
+        payment.source.update_attributes!({
           :cc_type => payment.source.cc_type, # side-effect of update_source!
           :gateway_customer_profile_id => response.params['id'],
           :gateway_payment_profile_id => response.params['default_card']

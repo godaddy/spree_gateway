@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Gateway::CardSave < Gateway
     preference :login, :string

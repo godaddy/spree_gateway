@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SpreeGateway
   class Engine < Rails::Engine
     engine_name 'spree_gateway'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Gateway::DataCash < Gateway
     preference :login, :string

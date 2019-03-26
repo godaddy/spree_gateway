@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class SkrillTransaction < ActiveRecord::Base
     has_many :payments, :as => :source

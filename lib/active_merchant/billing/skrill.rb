@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class Skrill < Gateway
