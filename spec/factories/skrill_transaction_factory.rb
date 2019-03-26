@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :skrill_transaction, class: Spree::SkrillTransaction do
     email ''
     amount 0.0

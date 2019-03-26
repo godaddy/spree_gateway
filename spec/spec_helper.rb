@@ -23,7 +23,7 @@ require 'spree/testing_support/factories'
 require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/preferences'
 
-FactoryGirl.find_definitions
+FactoryBot.find_definitions
 
 RSpec.configure do |config|
   config.mock_with :rspec
@@ -32,7 +32,7 @@ RSpec.configure do |config|
   #config.filter_run focus: true
   #config.filter_run_excluding slow: true
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include Spree::TestingSupport::Preferences
 
   config.before :suite do
