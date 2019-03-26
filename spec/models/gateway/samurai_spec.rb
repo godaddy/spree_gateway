@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::Samurai do
+RSpec.describe Spree::Gateway::Samurai do
   let(:gateway) { Spree::Gateway::Samurai.create!(name: 'Samurai') }
 
   context '.provider_class' do
@@ -11,7 +9,7 @@ describe Spree::Gateway::Samurai do
 
   context '.payment_profiles_supported?' do
     it 'return true' do
-      expect(gateway.payment_profiles_supported?).to be_true
+      expect(gateway.payment_profiles_supported?).to eq(true)
     end
   end
 end

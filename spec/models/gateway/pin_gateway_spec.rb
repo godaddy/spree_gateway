@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::PinGateway do
+RSpec.describe Spree::Gateway::PinGateway do
 
   before do
     Spree::Gateway.update_all(active: false)
@@ -8,9 +6,9 @@ describe Spree::Gateway::PinGateway do
     @gateway.set_preference(:api_key, 'W_VzkRCZSILiKWUS-dndUg')
     @gateway.save!
 
-    country = create(:country, name: 'Australia', iso_name: 'Australia', iso3: 'AUS', iso: 'AU', numcode: 61)
-    state   = create(:state, name: 'Victoria', abbr: 'VIC', country: country)
-    address = create(:address,
+    country = FactoryBot.create(:country, name: 'Australia', iso_name: 'Australia', iso3: 'AUS', iso: 'AU', numcode: 61)
+    state   = FactoryBot.create(:state, name: 'Victoria', abbr: 'VIC', country: country)
+    address = FactoryBot.create(:address,
       firstname: 'Ronald C',
       lastname:  'Robot',
       address1:  '1234 My Street',
@@ -22,10 +20,10 @@ describe Spree::Gateway::PinGateway do
       country:   country
     )
 
-    order = create(:order_with_totals, bill_address: address, ship_address: address)
+    order = FactoryBot.create(:order_with_totals, bill_address: address, ship_address: address)
     order.update!
 
-    credit_card = create(:credit_card,
+    credit_card = FactoryBot.create(:credit_card,
       verification_value: '123',
       number:             '5520000000000000',
       month:              5,
@@ -35,7 +33,7 @@ describe Spree::Gateway::PinGateway do
       cc_type:            'mastercard'
     )
 
-    @payment = create(:payment, source: credit_card, order: order, payment_method: @gateway, amount: 10.00)
+    @payment = FactoryBot.create(:payment, source: credit_card, order: order, payment_method: @gateway, amount: 10.00)
     @payment.payment_method.environment = 'test'
   end
 
@@ -46,11 +44,11 @@ describe Spree::Gateway::PinGateway do
 
   # Regression test for #106
   it 'uses auto capturing' do
-    expect(@gateway.auto_capture?).to be_true
+    expect(@gateway.auto_capture?).to eq(true)
   end
 
   it 'always uses purchase' do
-    @payment.should_receive(:purchase!)
+    expect(@payment).to receive(:purchase!)
     @payment.process!
   end
 end

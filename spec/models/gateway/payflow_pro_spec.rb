@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::PayflowPro do
+RSpec.describe Spree::Gateway::PayflowPro do
   let(:gateway) { described_class.create!(name: 'PayflowPro') }
 
   context '.provider_class' do
@@ -12,12 +10,12 @@ describe Spree::Gateway::PayflowPro do
   describe 'options' do
     it 'include :test => true when :test_mode is true' do
       gateway.preferred_test_mode = true
-      expect(gateway.options[:test]).to be_true
+      expect(gateway.options[:test]).to eq(true)
     end
 
     it 'does not include :test when test_mode is false' do
       gateway.preferred_test_mode = false
-      expect(gateway.options[:test]).to be_false
+      expect(gateway.options[:test]).to eq(false)
     end
   end
 end

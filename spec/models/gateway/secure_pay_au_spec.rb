@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::SecurePayAU do
+RSpec.describe Spree::Gateway::SecurePayAU do
   let(:gateway) { described_class.create!(name: 'SecurePayAU') }
 
   context '.provider_class' do

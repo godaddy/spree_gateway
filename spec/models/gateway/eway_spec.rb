@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::Eway do
+RSpec.describe Spree::Gateway::Eway do
   let(:gateway) { described_class.create!(name: 'Eway') }
 
   context '.provider_class' do
@@ -11,19 +9,19 @@ describe Spree::Gateway::Eway do
 
   context '.auto_capture?' do
     it 'supports purchase method only' do
-      expect(gateway.auto_capture?).to be_true
+      expect(gateway.auto_capture?).to eq(true)
     end
   end
 
   describe 'options' do
     it 'include :test => true in  when :test_mode is true' do
       gateway.preferred_test_mode = true
-      expect(gateway.options[:test]).to be_true
+      expect(gateway.options[:test]).to eq(true)
     end
 
     it 'does not include :test when test_mode is false' do
       gateway.preferred_test_mode = false
-      expect(gateway.options[:test]).to be_false
+      expect(gateway.options[:test]).to eq(false)
     end
   end
 end

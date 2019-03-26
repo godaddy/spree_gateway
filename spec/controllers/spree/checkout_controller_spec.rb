@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::CheckoutController do
+RSpec.describe Spree::CheckoutController do
   context '#skrill_return' do
     specify do
     end

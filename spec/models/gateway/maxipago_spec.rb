@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::Maxipago do
+RSpec.describe Spree::Gateway::Maxipago do
   let(:gateway) { described_class.create!(name: 'Maxipago') }
 
   context '.provider_class' do
@@ -11,7 +9,7 @@ describe Spree::Gateway::Maxipago do
 
   context '.auto_capture?' do
     it 'return true' do
-      expect(subject.auto_capture?).to be_true
+      expect(subject.auto_capture?).to eq(true)
     end
   end
 end

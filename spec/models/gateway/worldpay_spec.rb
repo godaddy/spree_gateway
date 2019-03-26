@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::Worldpay do
+RSpec.describe Spree::Gateway::Worldpay do
   let(:gateway) { described_class.create!(name: 'Worldpay') }
 
   context '.provider_class' do

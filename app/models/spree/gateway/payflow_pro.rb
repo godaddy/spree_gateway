@@ -6,12 +6,12 @@ module Spree
     def provider_class
       ActiveMerchant::Billing::PayflowGateway
     end
-
-    def options_with_test_preference
-      options_without_test_preference.merge(:test => self.preferred_test_mode)
-    end
-
-    alias_method_chain :options, :test_preference
-
   end
 end
+
+module SpreeGatewayPayflowProDecorator
+  def options
+    super.merge(test: self.preferred_test_mode)
+  end
+end
+Spree::Gateway::PayflowPro.prepend SpreeGatewayPayflowProDecorator

@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::Moneris do
+RSpec.describe Spree::Gateway::Moneris do
   let(:gateway) { described_class.create!(name: 'Moneris') }
 
   context '.provider_class' do

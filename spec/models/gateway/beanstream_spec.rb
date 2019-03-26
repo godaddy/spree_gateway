@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::Beanstream do
+RSpec.describe Spree::Gateway::Beanstream do
   let(:gateway) { described_class.create!(name: 'Beanstream') }
 
   context '.provider_class' do
@@ -11,7 +9,7 @@ describe Spree::Gateway::Beanstream do
 
   context '.payment_profiles_supported?' do
     it 'return true' do
-      expect(gateway.payment_profiles_supported?).to be_true
+      expect(gateway.payment_profiles_supported?).to eq(true)
     end
   end
 end

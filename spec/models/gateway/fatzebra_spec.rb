@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::Fatzebra do
+RSpec.describe Spree::Gateway::Fatzebra do
 
   before do
     Spree::Gateway.update_all(active: false)
@@ -9,9 +7,9 @@ describe Spree::Gateway::Fatzebra do
     @gateway.set_preference(:token, 'TEST')
     @gateway.save!
 
-    country = create(:country, name: 'Australia', iso_name: 'Australia', iso3: 'AUS', iso: 'AU', numcode: 61)
-    state   = create(:state, name: 'Victoria', abbr: 'VIC', country: country)
-    address = create(:address,
+    country = FactoryBot.create(:country, name: 'Australia', iso_name: 'Australia', iso3: 'AUS', iso: 'AU', numcode: 61)
+    state   = FactoryBot.create(:state, name: 'Victoria', abbr: 'VIC', country: country)
+    address = FactoryBot.create(:address,
       firstname: 'Ronald C',
       lastname:  'Robot',
       address1:  '1234 My Street',
@@ -23,10 +21,10 @@ describe Spree::Gateway::Fatzebra do
       country:   country
     )
 
-    order = create(:order_with_totals, bill_address: address, ship_address: address, last_ip_address: '127.0.0.1')
+    order = FactoryBot.create(:order_with_totals, bill_address: address, ship_address: address, last_ip_address: '127.0.0.1')
     order.update!
 
-    credit_card = create(:credit_card,
+    credit_card = FactoryBot.create(:credit_card,
       verification_value: '123',
       number:             '5123456789012346',
       month:              5,
@@ -34,7 +32,7 @@ describe Spree::Gateway::Fatzebra do
       name:               'Ronald C Robot'
     )
 
-    @payment = create(:payment, source: credit_card, order: order, payment_method: @gateway, amount: 10.00)
+    @payment = FactoryBot.create(:payment, source: credit_card, order: order, payment_method: @gateway, amount: 10.00)
     @payment.payment_method.environment = 'test'
   end
 
@@ -45,7 +43,7 @@ describe Spree::Gateway::Fatzebra do
 
   context '.auto_capture?' do
     it 'return true' do
-      expect(@gateway.auto_capture?).to be_true
+      expect(@gateway.auto_capture?).to eq(true)
     end
   end
 end

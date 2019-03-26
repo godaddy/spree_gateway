@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::CardSave do
+RSpec.describe Spree::Gateway::CardSave do
   let(:gateway) { described_class.create!(name: 'CardSave') }
 
   context '.provider_class' do

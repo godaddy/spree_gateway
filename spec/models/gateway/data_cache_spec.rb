@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::DataCash do
+RSpec.describe Spree::Gateway::DataCash do
   let(:gateway) { described_class.create!(name: 'DataCash') }
 
   context '.provider_class' do

@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::Banwire do
+RSpec.describe Spree::Gateway::Banwire do
   let(:gateway) { described_class.create!(name: 'Banwire') }
 
   context '.provider_class' do

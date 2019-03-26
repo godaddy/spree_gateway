@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::BraintreeGateway do
+RSpec.describe Spree::Gateway::BraintreeGateway do
 
   before do
     Spree::Gateway.update_all(active: false)
@@ -12,9 +10,9 @@ describe Spree::Gateway::BraintreeGateway do
     @gateway.save!
 
     with_payment_profiles_off do
-      country = create(:country, name: 'United States', iso_name: 'UNITED STATES', iso3: 'USA', iso: 'US', numcode: 840)
-      state   = create(:state, name: 'Maryland', abbr: 'MD', country: country)
-      address = create(:address,
+      country = FactoryBot.create(:country, name: 'United States', iso_name: 'UNITED STATES', iso3: 'USA', iso: 'US', numcode: 840)
+      state   = FactoryBot.create(:state, name: 'Maryland', abbr: 'MD', country: country)
+      address = FactoryBot.create(:address,
         firstname: 'John',
         lastname:  'Doe',
         address1:  '1234 My Street',
@@ -26,10 +24,10 @@ describe Spree::Gateway::BraintreeGateway do
         country:   country
       )
 
-      order = create(:order_with_totals, bill_address: address, ship_address: address)
+      order = FactoryBot.create(:order_with_totals, bill_address: address, ship_address: address)
       order.update!
 
-      @credit_card = create(:credit_card,
+      @credit_card = FactoryBot.create(:credit_card,
         verification_value: '123',
         number:             '5105105105105100',
         month:              9,
@@ -38,7 +36,7 @@ describe Spree::Gateway::BraintreeGateway do
         last_name:          'Doe',
         cc_type:            'mastercard')
 
-      @payment = create(:payment, source: @credit_card, order: order, payment_method: @gateway, amount: 10.00)
+      @payment = FactoryBot.create(:payment, source: @credit_card, order: order, payment_method: @gateway, amount: 10.00)
       @payment.payment_method.environment = 'test'
     end
   end
@@ -52,7 +50,7 @@ describe Spree::Gateway::BraintreeGateway do
       let(:merchant_account_id) { '' }
 
       it 'does not be present in options' do
-        expect(@gateway.options.keys.include?(:merchant_account_id)).to be_false
+        expect(@gateway.options.keys.include?(:merchant_account_id)).to eq(false)
       end
     end
 
@@ -64,11 +62,11 @@ describe Spree::Gateway::BraintreeGateway do
       end
 
       it 'have a preferences[:merchant_account_id]' do
-        expect(@gateway.preferences.keys.include?(:merchant_account_id)).to be_true
+        expect(@gateway.preferences.keys.include?(:merchant_account_id)).to eq(true)
       end
 
       it 'is present in options' do
-        expect(@gateway.options.keys.include?(:merchant_account_id)).to be_true
+        expect(@gateway.options.keys.include?(:merchant_account_id)).to eq(true)
       end
     end
   end
@@ -81,7 +79,7 @@ describe Spree::Gateway::BraintreeGateway do
 
   context '.payment_profiles_supported?' do
     it 'return true' do
-      expect(@gateway.payment_profiles_supported?).to be_true
+      expect(@gateway.payment_profiles_supported?).to eq(true)
     end
   end
 
@@ -95,7 +93,7 @@ describe Spree::Gateway::BraintreeGateway do
     it 'return a success response with an authorization code' do
       result = @gateway.authorize(500, @credit_card)
 
-      expect(result.success?).to be_true
+      expect(result.success?).to eq(true)
       expect(result.authorization).to match /\A\w{6}\z/
       expect(Braintree::Transaction::Status::Authorized).to eq Braintree::Transaction.find(result.authorization).status
     end
@@ -183,7 +181,7 @@ describe Spree::Gateway::BraintreeGateway do
       expect(transaction.status).to eq Braintree::Transaction::Status::Authorized
 
       capture_result = @gateway.capture(@payment.amount, @payment.response_code)
-      expect(capture_result.success?).to be_true
+      expect(capture_result.success?).to eq(true)
 
       transaction = ::Braintree::Transaction.find(@payment.response_code)
       expect(transaction.status).to eq Braintree::Transaction::Status::SubmittedForSettlement
@@ -202,14 +200,14 @@ describe Spree::Gateway::BraintreeGateway do
       @payment.capture! # as done in PaymentsController#fire
       transaction = ::Braintree::Transaction.find(@payment.response_code)
       expect(transaction.status).to eq Braintree::Transaction::Status::SubmittedForSettlement
-      expect(@payment.completed?).to be_true
+      expect(@payment.completed?).to eq(true)
     end
   end
 
   context 'purchase' do
     it 'return a success response with an authorization code' do
       result =  @gateway.purchase(500, @credit_card)
-      expect(result.success?).to be_true
+      expect(result.success?).to eq(true)
       expect(result.authorization).to match /\A\w{6}\z/
       expect(Braintree::Transaction::Status::SubmittedForSettlement).to eq Braintree::Transaction.find(result.authorization).status
     end

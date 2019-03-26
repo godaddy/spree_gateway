@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Spree::Gateway::PayPalGateway do
+RSpec.describe Spree::Gateway::PayPalGateway do
   let(:gateway) { described_class.create!(name: 'PayPal') }
 
   context '.provider_class' do

@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe ActiveMerchant::Billing::Skrill do
+RSpec.describe ActiveMerchant::Billing::Skrill do
   let(:url) { 'https://www.moneybookers.com/app/payment.pl' }
 
   context '.service_url' do
