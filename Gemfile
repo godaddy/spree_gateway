@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'spree', github: 'godaddy/spree', branch: 'rails_50'
+gem 'spree', github: 'godaddy/spree', branch: 'rails_51'
 
 gemspec
 
