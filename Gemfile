@@ -8,7 +8,7 @@ group :test do
   gem 'pry'
   gem 'coffee-rails', '~> 5.0.0' # necessary for stripe.js.coffee
   gem 'sass-rails', '~> 6.0.0'
-  gem 'poltergeist', '1.4.1'
+  gem 'poltergeist', '1.18.1'
   gem 'selenium-webdriver'
   gem 'database_cleaner', '2.0.2'
 
